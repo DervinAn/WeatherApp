@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Tempo</string>
+    <string name="Weather_image">Weather</string>
+    <string name="Rain">Rain</string>
+    <string name="Clouds">Clouds</string>
+    <string name="Clear_sky">Clear sky</string>
+    <string name="sunny">Sun</string>
+    <string name="Clouds_spark">thunder</string>
+    <string name="potential_rain">Potential rain</string>
+    <string name="advice">A sunny day in your location, consider wearing your UV protection</string>
+    <string name="advice1">A cloudy day will occur all day long, don,t worry about the heat of the sun</string>
+</resources>
