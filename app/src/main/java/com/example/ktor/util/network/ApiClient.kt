@@ -16,8 +16,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -45,17 +43,17 @@ object KtorClient {
         }
     }
 
-    suspend fun getWeather(city: String): WeatherResponse {
-        val url = "$BASEURL$city&appid=$API_KEY"
-        Log.d("KtorClient", "KtorClient initialized")
-        return client.get(url).body()
-
-    }
-    suspend fun getWeatherByLocation(latitude: Double, longitude: Double): WeatherResponse{
-        val url = "$BASEURL?lat=$latitude&lon=$longitude&appid=$API_KEY"
-        Log.d("KtorClient", "KtorClient initialized")
-        return client.get(url).body()
-    }
+//    suspend fun getWeather(city: String): WeatherResponse {
+//        val url = "$BASEURL$city&appid=$API_KEY"
+//        Log.d("KtorClient", "KtorClient initialized")
+//        return client.get(url).body()
+//
+//    }
+//    suspend fun getWeatherByLocation(latitude: Double, longitude: Double): WeatherResponse{
+//        val url = "$BASEURL?lat=$latitude&lon=$longitude&appid=$API_KEY"
+//        Log.d("KtorClient", "KtorClient initialized")
+//        return client.get(url).body()
+//    }
 }
 
 
