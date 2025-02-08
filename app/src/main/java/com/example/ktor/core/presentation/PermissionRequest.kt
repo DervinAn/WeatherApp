@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
@@ -16,20 +17,19 @@ import com.google.android.gms.location.LocationServices
 @Composable
 fun RequestLocationPermission(
     onLocationFetched: (Double, Double) -> Unit, // Callback to handle fetched location
-    onPermissionDenied: () -> Unit // Callback to handle denied permissions
+    onPermissionDenied: () -> Unit, // Callback to handle denied permissions
+    onLocationFetchFailed: () -> Unit = {} // Optional callback for location fetch failure
 ) {
     val context = LocalContext.current
 
     // Define the location permissions
-    val locationPermissions = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
+    val locationPermissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
     // Check if permissions are already granted
-    val allPermissionsGranted = locationPermissions.all {
-        ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
-    }
+    val isPermissionGranted = ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
 
     // Launcher for requesting permissions
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -38,7 +38,7 @@ fun RequestLocationPermission(
         val allGranted = permissionsMap.values.all { it }
         if (allGranted) {
             // Permissions granted, fetch location
-            fetchLocation(context, onLocationFetched)
+            fetchLocation(context, onLocationFetched, onLocationFetchFailed)
         } else {
             // Handle denied permissions
             onPermissionDenied()
@@ -47,17 +47,21 @@ fun RequestLocationPermission(
 
     // Request permissions if not already granted
     LaunchedEffect(Unit) {
-        if (!allPermissionsGranted) {
+        if (!isPermissionGranted) {
             permissionLauncher.launch(locationPermissions)
         } else {
             // Permissions already granted, fetch location
-            fetchLocation(context, onLocationFetched)
+            fetchLocation(context, onLocationFetched, onLocationFetchFailed)
         }
     }
 }
 
 // Function to fetch location
-private fun fetchLocation(context: Context, onLocationFetched: (Double, Double) -> Unit) {
+private fun fetchLocation(
+    context: Context,
+    onLocationFetched: (Double, Double) -> Unit,
+    onLocationFetchFailed: () -> Unit
+) {
     val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
 
@@ -71,14 +75,19 @@ private fun fetchLocation(context: Context, onLocationFetched: (Double, Double) 
                 if (location != null) {
                     val latitude = location.latitude
                     val longitude = location.longitude
-                    // Call the callback with the fetched location
+                    Log.d("Fetched Location_Permission","Fetched Location: Latitude=$latitude, Longitude=$longitude")
                     onLocationFetched(latitude, longitude)
                 } else {
-                    // Handle the case where location is null
+                    Log.w("Failed to fetch location","Location is null. Unable to fetch current location.")
+                    onLocationFetchFailed()
                 }
             }
-            .addOnFailureListener { exception ->
-                // Handle failure
+            .addOnFailureListener {
+                Log.d("Exception_Permission", "Failed to fetch location")
+                onLocationFetchFailed()
             }
+    } else {
+        Log.e("Permission Denied","Location permission not granted. Unable to fetch location.")
+        onLocationFetchFailed()
     }
 }

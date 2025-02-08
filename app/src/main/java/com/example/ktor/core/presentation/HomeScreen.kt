@@ -71,21 +71,33 @@ fun HomeScreen() {
     var showTopSheet by remember { mutableStateOf(false) }
 
 
+    var requestLocation by remember { mutableStateOf(false) }
 
-    // Handle location permission and fetch weather by location
-    RequestLocationPermission(
-        onLocationFetched = { latitude, longitude ->
-            viewModel.fetchWeatherByLocation(latitude, longitude)
-            Log.d("Location", "Latitude: $latitude, Longitude: $longitude")
-        },
-        onPermissionDenied = {
-            // Handle denied permissions (e.g., show a message or guide to settings)
-        }
-    )
+
 
     // Collect UI state from ViewModel
     val state = viewModel.state.collectAsState()
     val allWeather = viewModel.allWeather.collectAsState()
+
+    if (requestLocation) {
+        RequestLocationPermission(
+            onLocationFetched = { latitude, longitude ->
+                viewModel.fetchWeatherByLocation(latitude, longitude)
+                Log.d("Presentation_Response", "Fetching weather for Latitude=$latitude, Longitude=$longitude")
+                requestLocation = false // Reset the state after fetching
+            },
+            onPermissionDenied = {
+                Log.d("Permission Denied", "Location permission denied. Prompt user to enable permissions.")
+                Toast.makeText(context, "Location permission denied", Toast.LENGTH_SHORT).show()
+                requestLocation = false // Reset the state after denial
+            },
+            onLocationFetchFailed = {
+                Log.d("Exception", "Failed to fetch location. Prompt user to enable GPS or retry.")
+                Toast.makeText(context, "Failed to fetch location", Toast.LENGTH_SHORT).show()
+                requestLocation = false // Reset the state after failure
+            }
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -98,6 +110,9 @@ fun HomeScreen() {
             modifier = Modifier.align(Alignment.TopCenter),
             onClickListener = { showBottomSheet = true },
             onClickListener2 = { showTopSheet = true },
+            onClickListener3 = {
+                requestLocation = true
+            },
             text = city
         )
 

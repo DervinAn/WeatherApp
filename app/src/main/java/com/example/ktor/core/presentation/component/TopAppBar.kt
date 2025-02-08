@@ -21,7 +21,7 @@ import com.example.ktor.R
 import com.example.ktor.util.presentation.TextWea
 
 @Composable
-fun TopAppBar(modifier: Modifier = Modifier,onClickListener: () -> Unit,onClickListener2: () -> Unit, text: String) {
+fun TopAppBar(modifier: Modifier = Modifier, onClickListener: () -> Unit, onClickListener2: () -> Unit, onClickListener3:  () -> Unit, text: String) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -35,7 +35,7 @@ fun TopAppBar(modifier: Modifier = Modifier,onClickListener: () -> Unit,onClickL
         ) {
             IconButton(
                 onClick = {
-                    onClickListener2()
+                    onClickListener3()
                 },
             ) {
                 Icon(

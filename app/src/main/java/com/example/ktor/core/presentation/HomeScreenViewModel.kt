@@ -49,6 +49,7 @@ class HomeScreenViewModel(
                 is  Result.Success -> {
                     _state.value = UiState.Success(result.data)
                     saveWeatherData(city, result.data) // Save fetched data to DB
+                    Log.d("WeatherViewModel", "Weather fetched and saved to database: ${result.data}")
                 }
 
                 is Result.Error -> { // Handle errors properly
@@ -69,17 +70,30 @@ class HomeScreenViewModel(
     fun fetchWeatherByLocation(latitude: Double, longitude: Double) {
         viewModelScope.launch {
             _state.value = UiState.Loading
-            try {
-                val response = getWeatherUseCase.executeByLocation(latitude, longitude)
-                _state.value = UiState.Success(response)
-                saveWeatherData(city.value, response)
-            } catch (e: Exception) {
-                _state.value = UiState.Error(e.message ?: "Unknown error")
-                Log.e("WeatherFetchError", e.message ?: "Error fetching weather by location")
+            val result = getWeatherUseCase.executeByLocation(latitude, longitude)
+            when (result) {
+                is Result.Success -> {
+                    _state.value = UiState.Success(result.data)
+                    saveWeatherData(city.value, result.data)
+                    Log.d("WeatherViewModel", "Weather fetched and saved to database: ${result.data}")
+                    _city.update {
+                        result.data.name
+                    }
+                }
+                is Result.Error -> {
+                    val errorMessage = when (result.error) {
+                        Error.Network.NO_INTERNET_CONNECTION -> "No internet connection"
+                        Error.Network.REQUEST_TIMEOUT -> "Request timed out. Try again!"
+                        Error.Network.SERVER_ERROR -> "Server error. Please try again later."
+                        Error.Unexpected.UNKNOWN_ERROR -> "An unexpected error occurred"
+                        else -> "Something went wrong"
+                    }
+                    _state.value = UiState.Error(errorMessage)
+                    Log.e("WeatherFetchError", errorMessage)
+                }
             }
         }
     }
-
     private fun saveWeatherData(city: String, response: WeatherResponse) {
         val weatherEntity = WeatherEntity(
             city = city,
