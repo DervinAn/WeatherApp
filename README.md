@@ -36,9 +36,10 @@
 <div align="center">
     <a href="https://kotlinlang.org/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/kotlinlang-icon.svg" alt="Kotlin" height="50" /></a>
     <a href="https://developer.android.com/jetpack/compose" target="_blank"><img style="margin: 10px" src="https://github.com/user-attachments/assets/ddaebf61-fc19-4d01-9d74-5766f06585bc" alt="Jetpack Compose" height="50" /></a>
-    <a href="https://openweathermap.org/" target="_blank"><img style="margin: 10px" src="https://openweathermap.org/" alt="OpenWeatherMap" height="50" /></a>
+    <a href="https://openweathermap.org/" target="_blank"><img style="margin: 10px" src="https://github.com/user-attachments/assets/883bcb12-69e6-41c7-922b-89fb5bae6dca" alt="OpenWeatherMap" height="50" /></a>
     <a href="https://github.com/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/git-scm-icon.svg" alt="Git" height="50" /></a>
 </div>
+
 
 ## Screenshots
 
