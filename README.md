@@ -1,3 +1,7 @@
+<img width="1120" alt="Cover" src="https://github.com/user-attachments/assets/d68301a3-a005-4f93-b416-51d137b59595" /><div align="center">
+    <img src="https://github.com/user-attachments/assets/9499bce2-8426-4fa1-95cd-552c891534cd" 
+ align="center" style="width: 100%; height: auto;" />
+</div>
 ### <div align="center">Weather Forecast Application 🌦️</div>
 
 - 🚀 A modern Android app built with **Jetpack Compose** providing **real-time weather updates** and **7-day forecasts**.
