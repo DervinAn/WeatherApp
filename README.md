@@ -35,7 +35,7 @@
 
 <div align="center">
     <a href="https://kotlinlang.org/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/kotlinlang-icon.svg" alt="Kotlin" height="50" /></a>
-    <a href="https://developer.android.com/jetpack/compose" target="_blank"><img style="margin: 10px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Jetpack_Compose_logo.svg/2560px-Jetpack_Compose_logo.svg.png" alt="Jetpack Compose" height="50" /></a>
+    <a href="https://developer.android.com/jetpack/compose" target="_blank"><img style="margin: 10px" src="https://github.com/user-attachments/assets/ddaebf61-fc19-4d01-9d74-5766f06585bc" alt="Jetpack Compose" height="50" /></a>
     <a href="https://openweathermap.org/" target="_blank"><img style="margin: 10px" src="https://upload.wikimedia.org/wikipedia/commons/3/3d/OpenWeatherMap_Logo.svg" alt="OpenWeatherMap" height="50" /></a>
     <a href="https://github.com/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/git-scm-icon.svg" alt="Git" height="50" /></a>
 </div>
